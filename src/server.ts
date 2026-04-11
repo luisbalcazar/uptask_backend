@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import { connectDB } from "./config/db";
+import authRoutes from "./routes/authRoutes";
 import projectRoutes from "./routes/projectRoutes";
 import { corsOptions } from "./config/cors";
 
@@ -22,6 +23,7 @@ app.use(morgan("common"));
 app.use(express.json());
 
 //Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 
 export default app;
