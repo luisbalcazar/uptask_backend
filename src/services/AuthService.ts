@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import Token from "../models/Token";
 import User, { IUser } from "../models/User";
+import { generateToken } from "../utils/token";
 
 class AuthService {
   static getUserByEmail = async (email: string) => {
@@ -17,6 +18,13 @@ class AuthService {
 
   static tokenExists = async (token: string) => {
     return await Token.findOne({ token });
+  };
+
+  static createToken = (id: Types.ObjectId) => {
+    const token = new Token();
+    token.token = generateToken();
+    token.user = id;
+    return token;
   };
 }
 
