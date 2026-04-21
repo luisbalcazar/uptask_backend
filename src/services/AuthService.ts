@@ -12,6 +12,13 @@ class AuthService {
     return await User.findOne(id);
   };
 
+  static getUserByIdWithOptions = async (
+    id: Types.ObjectId,
+    select: string,
+  ) => {
+    return await User.findOne(id).select(select);
+  };
+
   static createUser = async (user: IUser) => {
     return await User.create(user);
   };

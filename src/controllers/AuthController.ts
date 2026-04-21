@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { AuthEmail } from "../emails/AuthEmail";
 import AuthService from "../services/AuthService";
 import { checkPassword, hashPassword } from "../utils/auth";
+import { generateJWT } from "../utils/jwt";
 
 export class AuthController {
   static createAccount = async (req: Request, res: Response) => {
@@ -110,7 +111,9 @@ export class AuthController {
         return res.status(401).json({ error: error.message });
       }
 
-      res.status(200).send("Bienvedido!");
+      const token = generateJWT({ id: user._id });
+
+      res.status(200).send(token);
     } catch (error) {
       console.error(
         colors.red(
